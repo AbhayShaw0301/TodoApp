@@ -1,4 +1,4 @@
-const todo = require("../constant/todo");
+const todo = require("../../constant/todo");
 const { v4: uuidv4 } = require("uuid");
 const getTodos = (req, res) => {
   try {
@@ -21,6 +21,7 @@ const createTodo = (req, res) => {
       status,
       date: new Date().toISOString().split("T")[0],
       id: todoId,
+      userId: req.session.user.id,
     };
     todo.push(newTodo);
 
