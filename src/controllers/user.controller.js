@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
-const user = require("../constant/user");
+const user = require("../../constant/user");
 const registerUser = async (req, res) => {
   const username = req.body.name;
   const email = req.body.email;
@@ -41,6 +41,12 @@ const LoginUser = async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, foundUser.password);
 
     if (passwordMatch) {
+      req.session.user = {
+        id: foundUser.id, 
+        username: foundUser.username,
+        email: foundUser.email,
+      };
+     
       return res
         .status(200)
         .json({ message: "Login successful", user: foundUser });
